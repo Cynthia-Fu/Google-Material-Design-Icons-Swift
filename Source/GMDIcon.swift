@@ -61,7 +61,7 @@ public extension UIBarButtonItem {
         let font = UIFont(name: GMDStruct.FontName, size: iconSize)
         
         assert(font != nil, GMDStruct.ErrorAnnounce)
-        setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+        setTitleTextAttributes([NSAttributedStringKey.font: font!], for: UIControlState())
         title = icon.text
     }
     
@@ -74,7 +74,7 @@ public extension UIBarButtonItem {
             FontLoader.loadFontIfNeeded()
             let font = UIFont(name: GMDStruct.FontName, size: 23)
             assert(font != nil,GMDStruct.ErrorAnnounce)
-            setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            setTitleTextAttributes([NSAttributedStringKey.font: font!], for: UIControlState())
             title = newValue?.text
         }
         
@@ -118,7 +118,7 @@ private class FontLoader {
                 let font = CGFont(provider!)
                 
                 var error: Unmanaged<CFError>?
-                if !CTFontManagerRegisterGraphicsFont(font, &error) {
+        if !CTFontManagerRegisterGraphicsFont(font!, &error) {
                     
                     let errorDescription: CFString = CFErrorCopyDescription(error!.takeUnretainedValue())
                     let nsError = error!.takeUnretainedValue() as AnyObject as! NSError
